@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class RR {
+    public static void main(String[] args) {
+
+        int sum = 0;
+        float awt = 0, atat = 0;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the no of Processes:");
+        int n = sc.nextInt();
+        System.out.print("\nEnter the Time Quantom:");
+        int tq = sc.nextInt();
+
+        int bt[] = new int[n];
+        int p[] = new int[n];
+        int wt[] = new int[n];
+        int tat[] = new int[n];
+        int obt[] = new int[n];
+        int ct[] = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("\nEnter Burst Time for process " + (i + 1) + ":");
+            bt[i] = sc.nextInt();
+            p[i] = i + 1;
+            obt[i] = bt[i];
+        }
+
+        while (true) {
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                int temp = tq;
+                if (bt[i] == 0) {
+                    count++;
+                    continue;
+                }
+
+                if (bt[i] > tq) {
+                    bt[i] = bt[i] - tq;
+                } else if (bt[i] >= 0) {
+                    temp = bt[i];
+                    bt[i] = 0;
+                    count++;
+                }
+                sum = sum + temp;
+                ct[i] = sum;
+            }
+
+            if (n == count) {
+                break;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            tat[i] = ct[i];
+            atat = atat + tat[i];
+            wt[i] = tat[i] - obt[i];
+            awt = awt + wt[i];
+        }
+
+        System.out.print(
+                "\n-------------------------------------------------------------------------------------------------------------\n");
+        System.out.print("Process\t   Burst Time\t    Completion Time\t   Wait Time\t       TAT");
+        System.out.print(
+                "\n-------------------------------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < n; i++) {
+            System.out.println("    " + p[i] + "\t\t" + obt[i] + "\t\t" + ct[i] + "\t\t\t" + wt[i] + "\t\t" + tat[i]);
+        }
+
+        System.out.print(
+                "\n-------------------------------------------------------------------------------------------------------------\n");
+        System.out.println("Average Waiting Time:" + (awt / n));
+        System.out.println("Average Turn Around Time:" + (atat / n));
+
+    }
+
+}

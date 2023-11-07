@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class FIFO {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter how many pages you want:");
+        int pg = sc.nextInt();
+
+        System.out.println("Enter all the pages:");
+        int pages[] = new int[pg];
+
+        for (int i = 0; i < pg; i++) {
+            pages[i] = sc.nextInt();
+        }
+
+        System.out.println("Enter frame size:");
+        int fr = sc.nextInt();
+        int frame[] = new int[fr];
+
+        for (int i = 0; i < fr; i++) {
+            frame[i] = -1;
+        }
+
+        int Hits = 0;
+        int Faults = 0;
+        int k = 0;
+        boolean check;
+
+        for (int i = 0; i < pg; i++)
+         {
+            check = false;
+
+            for (int j = 0; j < fr; j++)
+             {
+                if (frame[j] == pages[i]) 
+                {
+                    check = true;
+                    Hits = Hits + 1;
+                }
+            }
+
+            if (check == false) 
+            {
+                frame[k] = pages[i];
+                k++;
+                if (k >= fr)
+                    k = 0;
+                Faults = Faults + 1;
+            }
+        }
+
+        System.out.println("Hits :" + Hits);
+        System.out.println("Faults :" + Faults);
+    }
+}
